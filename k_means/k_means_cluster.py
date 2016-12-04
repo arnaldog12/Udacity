@@ -10,6 +10,7 @@ import sys
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
 from sklearn.cluster import KMeans
+from sklearn import preprocessing
 
 def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature 1", f2_name="feature 2"):
     """ some plotting code designed to help you visualize your clusters """
@@ -57,15 +58,19 @@ plt.show()
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
-kmeans = KMeans(n_clusters = 2).fit(finance_features)
+min_max_scaler = preprocessing.MinMaxScaler().fit(numpy.array(finance_features, dtype='float'))
+ff_scaled = min_max_scaler.transform(finance_features)
+#kmeans = KMeans(n_clusters = 2).fit(finance_features)
 # kmeans = KMeans(n_clusters = 3).fit(finance_features)
-pred = kmeans.predict(finance_features)
+kmeans = KMeans(n_clusters=2).fit(ff_scaled)
+pred = kmeans.predict(ff_scaled)
 
 # exc_sto_opt = numpy.array([l[1] for l in finance_features if l[1] > 0])
 # salary = numpy.array([l[0] for l in finance_features if l[0] > 0])
 
 # print(exc_sto_opt.min(), exc_sto_opt.max())
 # print(salary.min(), salary.max())
+print(min_max_scaler.transform([[200000.0, 1.0e6]]))
 
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
