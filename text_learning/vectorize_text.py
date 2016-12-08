@@ -33,7 +33,7 @@ word_data = []
 ### can take a long time
 ### temp_counter helps you only look at the first 200 emails in the list so you
 ### can iterate your modifications quicker
-temp_counter = 200
+temp_counter = 0
 
 for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
@@ -50,7 +50,7 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
 
             ### use str.replace() to remove any instances of the words
             ### ["sara", "shackleton", "chris", "germani"]
-            for sign in ["sara", "shackleton", "chris", "germani"]:
+            for sign in ["sara", "shackleton", "chris", "germani", "sshacklensf", "cgermannsf"]:
                 text = text.replace(sign, '')
 
             ### append the text to word_data
@@ -65,8 +65,8 @@ print "emails processed"
 from_sara.close()
 from_chris.close()
 
-# pickle.dump( word_data, open("your_word_data.pkl", "w") )
-# pickle.dump( from_data, open("your_email_authors.pkl", "w") )
+pickle.dump( word_data, open("your_word_data.pkl", "w") )
+pickle.dump( from_data, open("your_email_authors.pkl", "w") )
 
 word_data = pickle.load( open("your_word_data.pkl", "r") )
 
